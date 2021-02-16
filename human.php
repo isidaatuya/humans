@@ -13,7 +13,7 @@ class human{
 		print("矢田氏の名前は" . $this->name . "です" . PHP_EOL);
 		print("年齢は" . $this->age . "歳です" . PHP_EOL);
 	}
-	//度合いぶ
+	//ドライブ
 	public function drive(){
 		//年齢が１８さい以上だとドライブ
 		if($this->age >= 18){
@@ -23,16 +23,24 @@ class human{
 			print("あと" . (18 - $this->age) . "年齢お待ちくください");
 		}
 	}
+	
+	 //入力チェック
+	 public function validate(){
+	 	//入力エラーが複数ある場合にすべてエラーを保存する配列
+	 	$errors = array();
+	 	 //名前が入力されていなければ
+	    if($this->name === ""){
+	        //エラー配列にエラーメッセージをセット
+	        $errors[] = "名前を入力してください";
+	    }
+	    //年齢がないとき
+	    if($this->age === ""){
+	       $errors[] = "年齢を入れてください";
+	    }
+	    //完成したエラー配列、はい上げる
+	    return $errors;
+	 }
 }
 
-//isida誕生
-// $isida = new human("石田",25);
-//石田さん自己紹介する
-// $isida->say();
-// $isida->drive();
-
-//山田さん誕生
-// $yamada = new human("山田", 15);
-// $yamada->say();
-// $yamada->drive();
+ 
 ?> 

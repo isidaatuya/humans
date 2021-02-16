@@ -1,37 +1,38 @@
 <?php
-// 外部ファイルの読み込み
+   // 外部ファイルの読み込み
     require_once "human.php";
     //セッションスタート
     session_start();
-    //print "ok";
-    var_dump($_POST);
+   
     $name = $_POST["name"];
-    // print $name;
     $age = $_POST["age"];
-    // print $age;
-    
-    
-    
-    //名前が入力されていなければ
-    if($name === ""){
-        //	print "名前を入力してください";
-        //セッションにエラーメッセージをセット
-        $_SESSION["name_error"] = "名前を入力してください";
-    }
-    //年齢がないとき
-    if($age === ""){
-       // print "年齢がないよ";
-       $_SESSION["age_error"] = "年齢を入れてください";
-    }
-    //もし、名前か年齢のどちらかがない時は
-    if($name === "" || $age === ""){
-        	 //画面変わる
-        header("Location: new.php");    
-    }else{ // きちんと入力された場合
-    	$human = new Human($name, $age);
-    	$_SESSION["human"] = $human;
-    	$_SESSION["message"] = "新規メンバー登録に成功しました";
-    	header("Location: index.php");
-    }
+
+    //入力情報から新しい人間を作る
+    $new_human = new human($name, $age);
+    //エラー情報を受け取る
+    $errors = $new_human->validate();
+
+   // エラーが一つもなければ
+   if(count($errors) === 0){
+        $_SESSION["human"] = $new_human;
+     	$_SESSION["message"] = "新規メンバー登録に成功しました";
+     	
+     	header("Location: index.php");
+     	exit;
+     
+   }else{ //一つでも入力エラーがあれば
+       $_SESSION["errors"] = $errors;
+       	header("Location: new.php"); 
+       	exit;
+   }
+
+    // //もし、名前か年齢のどちらかがない時は
+    // if($name === "" || $age === ""){
+    //     	 //画面変わる
+    //        
+    // }else{ // きちんと入力された場合
+    // 	$human = new Human($name, $age);
+   
+    // }
    
 ?>

@@ -1,1 +1,11 @@
 git init
+
+git add . 
+
+git commit -m "20210216 レッスン開始時"
+
+git log
+
+git remote add origin https://github.com/isidaatuya/humans.git
+git branch -M main
+git push -u origin main
